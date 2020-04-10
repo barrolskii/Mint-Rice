@@ -277,34 +277,6 @@ function! DeleteBracketOrParenthesis()
 endfunction
 
 
-function! DelBehindQuotes(line)
-
-	if (a:line[col('.') - 2] == '"')
-		return "\<bs>\<delete>"
-	elseif(a:line[col('.')-3] == '"')
-		return "\<bs>\<bs>"
-	endif
-
-endfunction
-
- 
-function! DelInbetweenQuotes(line)
-
-	if (a:line[col('.')-2] == '[' && a:line[col('.')-1] == ']')
-		return "\<bs>\<delete>"
-	elseif(a:line[col('.')-2] == ']' && a:line[col('.')-3] == '[')
-		return "\<bs>\<bs>"
-	elseif(a:line[col('.')-2] == '(' && a:line[col('.')-1] == ')')
-		return "\<bs>\<delete>"
-	elseif(a:line[col('.')-2] == ')' && a:line[col('.')-3] == '(')
-		return "\<bs>\<bs>"
-	else
-		return "\<bs>"
-	endif
-
-endfunction
-
-
 function! Backspace()
 
 	let curr_line = getline('.')
@@ -312,9 +284,9 @@ function! Backspace()
 
  
 	if (curr_char == '"')
-		return DelBehindQuotes(curr_line)
+		return DeleteSingleOrDoubleQuotations()
 	elseif (curr_char == '(' || curr_char == ')' || curr_char == '[' || curr_char == ']')
-		return DelInbetweenQuotes(curr_line)
+		return DeleteBracketOrParenthesis()
 	endif
 
 
