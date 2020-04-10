@@ -199,6 +199,17 @@ endfunction
 " }}}
 
 
+""" LaTeX file settings {{{
+
+augroup filetype_tex
+	autocmd!
+	autocmd FileType tex :iabbrev sec <BSlash>section{}<left>
+	autocmd FileType tex :iabbrev ssec <BSlash>subsection{}<left>
+augroup END
+
+""" }}}
+
+
 " Util settings {{{
 
 function! InsertTabWrapper()
@@ -266,6 +277,34 @@ function! DeleteBracketOrParenthesis()
 endfunction
 
 
+function! DelBehindQuotes(line)
+
+	if (a:line[col('.') - 2] == '"')
+		return "\<bs>\<delete>"
+	elseif(a:line[col('.')-3] == '"')
+		return "\<bs>\<bs>"
+	endif
+
+endfunction
+
+ 
+function! DelInbetweenQuotes(line)
+
+	if (a:line[col('.')-2] == '[' && a:line[col('.')-1] == ']')
+		return "\<bs>\<delete>"
+	elseif(a:line[col('.')-2] == ']' && a:line[col('.')-3] == '[')
+		return "\<bs>\<bs>"
+	elseif(a:line[col('.')-2] == '(' && a:line[col('.')-1] == ')')
+		return "\<bs>\<delete>"
+	elseif(a:line[col('.')-2] == ')' && a:line[col('.')-3] == '(')
+		return "\<bs>\<bs>"
+	else
+		return "\<bs>"
+	endif
+
+endfunction
+
+
 function! Backspace()
 
 	let curr_line = getline('.')
@@ -273,9 +312,9 @@ function! Backspace()
 
  
 	if (curr_char == '"')
-		return DelTest(curr_line)
+		return DelBehindQuotes(curr_line)
 	elseif (curr_char == '(' || curr_char == ')' || curr_char == '[' || curr_char == ']')
-		return DelTestTwo(curr_line)
+		return DelInbetweenQuotes(curr_line)
 	endif
 
 
