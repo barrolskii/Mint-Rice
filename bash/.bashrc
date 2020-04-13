@@ -20,3 +20,6 @@ alias dev="cd ~/Dev/"
 # Quick quit the terminal because I'm too lazy to type the entire thing
 alias q="exit"
 
+PATH=$HOME/Dev/ShellScript:$PATH
+export TEMPLATES="$HOME/Dev/Templates"
+

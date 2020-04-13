@@ -102,6 +102,9 @@ augroup filetype_c
 	autocmd FileType c,cpp nnoremap <buffer> <localleader>c I//<esc>
 	autocmd FileType c,cpp nnoremap <buffer> <leader>; mqA;<esc>`q
 
+	autocmd FileType c setlocal foldmethod=marker
+
+	nnoremap <buffer> <leader>i i#include 
 
 	vnoremap <buffer> <leader>mc di<esc>:execute "vsp " . @* . ".h"<cr>	
 	nnoremap <buffer> <localleader>cc 0ebi<delete><delete><esc>
@@ -187,19 +190,26 @@ augroup filetype_html
 	autocmd!
 	autocmd BufNewFile *.html 0r ~/Dev/Mint-Rice/vim/templates/template.html
 	autocmd FileType html nnoremap <buffer> <leader>> vit<esc>i
+	autocmd FileType html nnoremap <buffer> <leader><leader> :call FindPlaceholder()<cr>i
+
+	autocmd FileType html nnoremap <buffer> <leader>1 a<h1></h1><esc>4hi
+	autocmd FileType html nnoremap <buffer> <leader>2 a<h2></h2><esc>4hi
+	autocmd FileType html nnoremap <buffer> <leader>3 a<h3></h3><esc>4hi
+
+	autocmd FileType html nnoremap <buffer> <leader>p a<p></p><esc>3hi
 augroup END
 
 function! FindPlaceholder()
 
    /<++>
-	normal f<
+	normal f+hda<
 
 endfunction
 
 " }}}
 
 
-""" LaTeX file settings {{{
+" LaTeX file settings {{{
 
 augroup filetype_tex
 	autocmd!
@@ -207,7 +217,7 @@ augroup filetype_tex
 	autocmd FileType tex :iabbrev ssec <BSlash>subsection{}<left>
 augroup END
 
-""" }}}
+" }}}
 
 
 " Util settings {{{
