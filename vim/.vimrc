@@ -104,7 +104,7 @@ augroup filetype_c
 
 	autocmd FileType c setlocal foldmethod=marker
 
-	nnoremap <buffer> <leader>i i#include 
+	autocmd FileType c  nnoremap <buffer> <leader>i i#include 
 
 	vnoremap <buffer> <leader>mc di<esc>:execute "vsp " . @* . ".h"<cr>	
 	nnoremap <buffer> <localleader>cc 0ebi<delete><delete><esc>
@@ -197,6 +197,11 @@ augroup filetype_html
 	autocmd FileType html nnoremap <buffer> <leader>3 a<h3></h3><esc>4hi
 
 	autocmd FileType html nnoremap <buffer> <leader>p a<p></p><esc>3hi
+	autocmd FileType html nnoremap <buffer> <localleader>c a<!-- --><esc>4hi
+
+	autocmd FileType html nnoremap <buffer> <leader>ul a<ul><cr><cr></ul><esc>ki
+	autocmd FileType html nnoremap <buffer> <leader>li a<li></li><esc>4hi
+	autocmd FileType html nnoremap <buffer> <leader>a a<a></a><esc>3hi
 augroup END
 
 function! FindPlaceholder()
@@ -215,12 +220,34 @@ augroup filetype_tex
 	autocmd!
 	autocmd FileType tex :iabbrev sec <BSlash>section{}<left>
 	autocmd FileType tex :iabbrev ssec <BSlash>subsection{}<left>
+
+	autocmd FileType text setlocal spell! spelllang=en_gb
+augroup END
+
+" }}}
+
+
+" text file settings {{{
+
+augroup filetype_text
+	autocmd!
+	autocmd FileType text setlocal spell! spelllang=en_gb
+	autocmd FileType text nnoremap <buffer> <leader>z z=
 augroup END
 
 " }}}
 
 
 " Util settings {{{
+
+augroup filetype_all
+	autocmd!
+
+	" Remove all trailing whitespace before writing the file
+	autocmd BufWritePre * %s/\s\+$//e
+	autocmd FileType * nnoremap <leader>l :Lex!<cr>
+augroup END
+
 
 function! InsertTabWrapper()
 

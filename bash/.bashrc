@@ -16,6 +16,7 @@ alias cls="clear"
 # Quick directory changes
 alias fyp="cd ~/Dev/FinalYearProject/Project-Eidolon"
 alias dev="cd ~/Dev/"
+alias mr="cd ~/Dev/Mint-Rice"
 
 # Quick quit the terminal because I'm too lazy to type the entire thing
 alias q="exit"
