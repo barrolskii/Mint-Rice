@@ -3,6 +3,7 @@ let maplocalleader = "\\"
 
 
 set tabstop=4
+set shiftwidth=4
 set number
 
 
@@ -15,7 +16,13 @@ set t_vb=
 
 " Always have the status bar at the bottom. (Default for Git Bash)
 set laststatus=2
- 
+
+call plug#begin('~/.config/nvim/plugged')
+
+Plug 'vimwiki/vimwiki'
+
+call plug#end()
+
 
 " Status line settings {{{
 
@@ -31,57 +38,57 @@ set statusline+=%F               " Print full path of file
 
 " }}}
 
- 
+
 " Basic abbrev and remap settings {{{
- 
+
 " Move current line down one
 noremap <leader>- ddp
- 
+
 " Move current line up one
 noremap <leader>_ ddkP
- 
+
 " Delete two lines but break the undo sequence
 " to allow each line to be undone individually
 nnoremap <leader>d ddi<c-g>u<esc>dd
- 
+
 " Make word uppercase
 noremap <leader>u viwU
- 
+
 " Make word lowercase
 noremap <leader>l viwu
- 
+
 " Shortcut to open .vimrc and to refresh changes
 nnoremap <leader>ev :vsp ~/Dev/Mint-Rice/vim/.vimrc<cr>
 nnoremap <leader>sv :source ~/Dev/Mint-Rice/vim/.vimrc<cr>
- 
+
 " Wrap current word in single quotes or double quotes
 nnoremap <leader>" ea"<esc>bi"<esc>lel
 nnoremap <leader>' ea'<esc>bi'<esc>lel
- 
+
 " Surround highlighted words with either (, {, [ or <
 vnoremap <leader>( di(<esc>pa)<esc>
 vnoremap <leader>{ di{<esc>pa}<esc>
 vnoremap <leader>[ di[<esc>pa]<esc>
 vnoremap <leader>< di<<esc>pa><esc>
- 
+
 " Surround words from cursor with either (, {, [ or <
 nnoremap <leader>( i(<esc>A)<esc>
 nnoremap <leader>{ i{<esc>A}<esc>
 nnoremap <leader>[ i[<esc>A]<esc>
 nnoremap <leader>< i<<esc>A><esc>
- 
+
 inoremap " ""<left>
- 
+
 nnoremap H 0
 nnoremap L $
- 
+
 " For vim in Git bash, when CTRL-<backspace> is pressed, delete the current word and
 " don't save it to a register use the black hole register instead
 inoremap ­ <esc>b"_dwa
- 
+
 " Yank current line with yl instead of y$
 onoremap l $
-  
+
 " Keys to move between multiple windows
 nnoremap <c-h> :wincmd h<cr>
 nnoremap <c-j> :wincmd j<cr>
@@ -104,9 +111,9 @@ augroup filetype_c
 
 	autocmd FileType c setlocal foldmethod=marker
 
-	autocmd FileType c  nnoremap <buffer> <leader>i i#include 
+	autocmd FileType c  nnoremap <buffer> <leader>i i#include<space>
 
-	vnoremap <buffer> <leader>mc di<esc>:execute "vsp " . @* . ".h"<cr>	
+	vnoremap <buffer> <leader>mc di<esc>:execute "vsp " . @* . ".h"<cr>
 	nnoremap <buffer> <localleader>cc 0ebi<delete><delete><esc>
 augroup END
 
@@ -118,7 +125,7 @@ augroup END
 augroup filetype_c_header
 	autocmd!
 	autocmd BufNewFile *.h 0r $VIM/vim80/templates/template.h
-	autocmd BufNewFile *.h exe "1," . 7 . "g/#ifndef/s//#ifndef " .toupper(join([fnamemodify(expand("%"), ':t:r'), '_H'], ''))              
+	autocmd BufNewFile *.h exe "1," . 7 . "g/#ifndef/s//#ifndef " .toupper(join([fnamemodify(expand("%"), ':t:r'), '_H'], ''))
 	autocmd BufNewFile *.h exe "1," . 7 . "g/#define/s//#define " .toupper(join([fnamemodify(expand("%"), ':t:r'), '_H'], ''))
 	autocmd BufNewFile *.h exe "1," . 7 . "g,#endif,s,,#endif \\//" .toupper(join([fnamemodify(expand("%"), ':t:r'), '_H'], ''))
 	autocmd BufNewFile *.h exe ":4"
@@ -177,7 +184,7 @@ augroup filetype_markdown
    	autocmd FileType markdown :onoremap ih :<c-u>execute "normal! ?^[==,--]\\+$\r:nohlsearch\rkvg_"<cr>
 	autocmd FileType markdown :onoremap ah :<c-u>execute "normal! ?^==\\+$\r:nohlsearch\rg_vk0"<cr>
 
-	"TODO: Add email eversion of the commands above 
+	"TODO: Add email eversion of the commands above
 	iabbrev ` ```<cr><cr>```<up><up>
 augroup END
 
@@ -202,6 +209,8 @@ augroup filetype_html
 	autocmd FileType html nnoremap <buffer> <leader>ul a<ul><cr><cr></ul><esc>ki
 	autocmd FileType html nnoremap <buffer> <leader>li a<li></li><esc>4hi
 	autocmd FileType html nnoremap <buffer> <leader>a a<a></a><esc>3hi
+
+	autocmd FileType text setlocal spell! spelllang=en_gb
 augroup END
 
 function! FindPlaceholder()
@@ -272,7 +281,7 @@ function! InsertBracket()
 
 endfunction
 
- 
+
 function! InsertParenthesis()
 
 	if (getline('.')[col('.') - 1] == '(')
@@ -296,7 +305,7 @@ function! DeleteSingleOrDoubleQuotations()
 
 endfunction
 
- 
+
 function! DeleteBracketOrParenthesis()
 
 	if (getline('.')[col('.')-2] == '[' && getline('.')[col('.')-1] == ']')
@@ -319,7 +328,7 @@ function! Backspace()
 	let curr_line = getline('.')
 	let curr_char = getline('.')[col('.') - 2]
 
- 
+
 	if (curr_char == '"')
 		return DeleteSingleOrDoubleQuotations()
 	elseif (curr_char == '(' || curr_char == ')' || curr_char == '[' || curr_char == ']')
@@ -331,7 +340,7 @@ function! Backspace()
 
 endfunction
 
- 
+
 inoremap <tab> <c-r>=InsertTabWrapper()<cr>
 inoremap [ <C-R>=InsertBracket()<cr><left>
 inoremap ( <C-R>=InsertParenthesis()<cr><left>

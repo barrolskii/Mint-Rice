@@ -2,11 +2,11 @@
 alias fyp="cd ~/Dev/FinalYearProject/Project-Eidolon"
 
 # Quick edit alias'
-alias evr="vim ~/Dev/Mint-Rice/vim/.vimrc"
-alias eba="vim ~/Dev/Mint-Rice/bash/.bashrc"
-alias ei3="vim ~/.config/i3/config"
-alias efyp="vim ~/Dev/FinalYearProject/Project-Eidolon/Notes.txt"
-alias ecom="vim ~/.config/compton.conf"
+alias evr="nvim ~/Dev/Mint-Rice/vim/.vimrc"
+alias eba="nvim ~/Dev/Mint-Rice/bash/.bashrc"
+alias ei3="nvim ~/.config/i3/config"
+alias efyp="nvim ~/Dev/FinalYearProject/Project-Eidolon/Notes.txt"
+alias ecom="nvim ~/.config/compton.conf"
 
 # Quick source bashrc if adding aliases on the fly
 alias sbr="source ~/.bashrc"
@@ -23,4 +23,4 @@ alias q="exit"
 
 PATH=$HOME/Dev/ShellScript:$PATH
 export TEMPLATES="$HOME/Dev/Templates"
-
+export PATH="$HOME/neovim/bin:$PATH"
