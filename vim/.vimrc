@@ -10,6 +10,11 @@ set number
 set nohlsearch
 set incsearch
 
+set termguicolors
+
+" Highlight column 81
+set colorcolumn=81
+highlight ColorColumn guibg=#2b2b2b
 
 " Disable the screen flash on Windows
 set t_vb=
@@ -19,9 +24,27 @@ set laststatus=2
 
 call plug#begin('~/.config/nvim/plugged')
 
+Plug 'junegunn/goyo.vim'
+
+" Syntax highlighting
+Plug 'ap/vim-css-color'
+
+" Documentation
 Plug 'vimwiki/vimwiki'
 
+" Themes
+Plug 'morhetz/gruvbox'
+Plug 'tomasiser/vim-code-dark'
+
 call plug#end()
+
+" Set the colorscheme to be default
+colorscheme default
+syntax on
+
+" Change the background color of the folded sections as it's too bright
+" with termguicolors enabled
+highlight Folded guibg=#2b2b2b
 
 
 " Status line settings {{{
@@ -94,6 +117,8 @@ nnoremap <c-h> :wincmd h<cr>
 nnoremap <c-j> :wincmd j<cr>
 nnoremap <c-k> :wincmd k<cr>
 nnoremap <c-l> :wincmd l<cr>
+
+nnoremap <leader>g :Goyo<cr>
 
 " }}}
 
@@ -349,4 +374,11 @@ inoremap <BS> <C-R>=Backspace()<cr>
 
 " }}}
 
+
+function! s:goyo_leave()
+	" Set the column color again as leaving Goyo sets it to red
+	highlight ColorColumn guibg=#2b2b2b
+endfunction
+
+autocmd! User GoyoLeave nested call <SID>goyo_leave()
 
