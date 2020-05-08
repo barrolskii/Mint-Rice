@@ -6,15 +6,11 @@ set tabstop=4
 set shiftwidth=4
 set number
 
-
 set nohlsearch
 set incsearch
 
 set termguicolors
-
-" Highlight column 81
-set colorcolumn=81
-highlight ColorColumn guibg=#2b2b2b
+set splitbelow splitright
 
 " Disable the screen flash on Windows
 set t_vb=
@@ -23,6 +19,11 @@ set t_vb=
 set laststatus=2
 
 call plug#begin('~/.config/nvim/plugged')
+
+Plug 'valloric/youcompleteme'
+
+" Check syntax
+Plug 'scrooloose/syntastic'
 
 Plug 'junegunn/goyo.vim'
 
@@ -46,8 +47,33 @@ syntax on
 " with termguicolors enabled
 highlight Folded guibg=#2b2b2b
 
+highlight Pmenu guibg=#2b2b2b
+
+" Highlight column 81
+set colorcolumn=81
+highlight ColorColumn guibg=#2b2b2b
+
+" Syntastic settings
+""let g:syntastic_always_populate_loc_list = 1
+""let g:syntastic_auto_loc_list = 1
+""let g:syntastic_check_on_open = 1
+""let g:syntastic_check_on_wq = 0
+
+" Ycm settings
+let g:ycm_global_ycm_extra_conf = '~/.config/nvim/plug-config/.ycm_extra_conf.py'
+let g:ycm_max_diagnostics_to_display=0
+let g:ycm_show_diagnostics_ui=0 " Stops error checking. That's what
+								" Syntastic is for
+
+
+" Source coc settings
+""source $HOME/.config/nvim/plug-config/coc.vim
 
 " Status line settings {{{
+
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
 
 set statusline=%f                " Current file
 set statusline+=\ --             " Separator
@@ -140,6 +166,9 @@ augroup filetype_c
 
 	vnoremap <buffer> <leader>mc di<esc>:execute "vsp " . @* . ".h"<cr>
 	nnoremap <buffer> <localleader>cc 0ebi<delete><delete><esc>
+
+	nnoremap <buffer> <leader>m :!make<cr>
+	nnoremap <buffer> <leader>p aprintf("\n");<esc>4hi
 augroup END
 
 " }}}
@@ -282,20 +311,6 @@ augroup filetype_all
 	autocmd FileType * nnoremap <leader>l :Lex!<cr>
 augroup END
 
-
-function! InsertTabWrapper()
-
-	let col = col('.') - 1
-
-	if !col || getline('.')[col - 1] !~ '\k'
-		return "\<tab>"
-	else
-		return "\<c-p>"
-	endif
-
-endfunction
-
-
 function! InsertBracket()
 
 	if (getline('.')[col('.') - 1] == '[')
@@ -366,7 +381,6 @@ function! Backspace()
 endfunction
 
 
-inoremap <tab> <c-r>=InsertTabWrapper()<cr>
 inoremap [ <C-R>=InsertBracket()<cr><left>
 inoremap ( <C-R>=InsertParenthesis()<cr><left>
 inoremap <BS> <C-R>=Backspace()<cr>
