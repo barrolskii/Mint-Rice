@@ -54,10 +54,10 @@ set colorcolumn=81
 highlight ColorColumn guibg=#2b2b2b
 
 " Syntastic settings
-""let g:syntastic_always_populate_loc_list = 1
-""let g:syntastic_auto_loc_list = 1
-""let g:syntastic_check_on_open = 1
-""let g:syntastic_check_on_wq = 0
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
 
 " Ycm settings
 let g:ycm_global_ycm_extra_conf = '~/.config/nvim/plug-config/.ycm_extra_conf.py'
