@@ -20,9 +20,8 @@ set laststatus=2
 
 call plug#begin('~/.config/nvim/plugged')
 
+" Autocompletion and syntax checking
 Plug 'valloric/youcompleteme'
-
-" Check syntax
 Plug 'scrooloose/syntastic'
 
 Plug 'junegunn/goyo.vim'
@@ -32,6 +31,8 @@ Plug 'ap/vim-css-color'
 
 " Documentation
 Plug 'vimwiki/vimwiki'
+
+Plug 'vim-airline/vim-airline'
 
 " Themes
 Plug 'morhetz/gruvbox'
@@ -66,24 +67,22 @@ let g:ycm_show_diagnostics_ui=0 " Stops error checking. That's what
 								" Syntastic is for
 
 
-" Source coc settings
-""source $HOME/.config/nvim/plug-config/coc.vim
 
 " Status line settings {{{
 
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-set statusline=%f                " Current file
-set statusline+=\ --             " Separator
-set statusline+=\ %y             " Filetype
-set statusline+=\ --\            " Separator
-set statusline+=Line\ [%4l/%L]   " Current line / total lines in file
-set statusline+=\ --\            " Separator
-set statusline+=Char\ [%3c]      " Current column
-set statusline+=%=               " Swap to right side
-set statusline+=%F               " Print full path of file
+""set statusline+=%#warningmsg#
+""set statusline+=%{SyntasticStatuslineFlag()}
+""set statusline+=%*
+""
+""set statusline=%f                " Current file
+""set statusline+=\ --             " Separator
+""set statusline+=\ %y             " Filetype
+""set statusline+=\ --\            " Separator
+""set statusline+=Line\ [%4l/%L]   " Current line / total lines in file
+""set statusline+=\ --\            " Separator
+""set statusline+=Char\ [%3c]      " Current column
+""set statusline+=%=               " Swap to right side
+""set statusline+=%F               " Print full path of file
 
 " }}}
 
@@ -390,8 +389,9 @@ inoremap <BS> <C-R>=Backspace()<cr>
 
 
 function! s:goyo_leave()
-	" Set the column color again as leaving Goyo sets it to red
+	" Set colors on Goyo leave otherwise they reset to defaults
 	highlight ColorColumn guibg=#2b2b2b
+	highlight Folded guibg=#2b2b2b
 endfunction
 
 autocmd! User GoyoLeave nested call <SID>goyo_leave()
