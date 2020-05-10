@@ -66,6 +66,12 @@ let g:ycm_max_diagnostics_to_display=0
 let g:ycm_show_diagnostics_ui=0 " Stops error checking. That's what
 								" Syntastic is for
 
+let g:ycm_semantic_triggers = {
+	\ 'c': ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
+	\		'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p',
+	\ 		'q', 'r', 's', 't', 'u', 'v', 'w', 'x',
+	\		'y', 'z'],
+\}
 
 
 " Status line settings {{{
@@ -152,6 +158,9 @@ nnoremap <leader>g :Goyo<cr>
 
 augroup filetype_c
 	autocmd!
+
+	let g:ycm_global_ycm_extra_conf = '~/.config/nvim/plug-config/.ycm_c_conf.py'
+
 	autocmd BufNewFile main.c 0r ~/Dev/Mint-Rice/vim/templates/template.c
 	autocmd BufNewFile main.cpp 0r ~/Dev/Mint-Rice/vim/templates/template.cpp
 	autocmd BufNewFile *.c nnoremap <leader>w :match Error /\s\+$/<cr>
