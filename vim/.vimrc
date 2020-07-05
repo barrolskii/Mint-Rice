@@ -172,11 +172,11 @@ augroup filetype_c
 
 	autocmd FileType c  nnoremap <buffer> <leader>i i#include<space>
 
-	vnoremap <buffer> <leader>mc di<esc>:execute "vsp " . @* . ".h"<cr>
-	nnoremap <buffer> <localleader>cc 0ebi<delete><delete><esc>
+	autocmd FileType c vnoremap <buffer> <leader>mc di<esc>:execute "vsp " . @* . ".h"<cr>
+	autocmd FileType c	nnoremap <buffer> <localleader>cc 0ebi<delete><delete><esc>
 
-	nnoremap <buffer> <leader>m :!make<cr>
-	nnoremap <buffer> <leader>p aprintf("\n");<esc>4hi
+	autocmd FileType c nnoremap <buffer> <leader>m :!make<cr>
+	autocmd FileType c nnoremap <buffer> <leader>p aprintf("\n");<esc>4hi
 augroup END
 
 " }}}
@@ -272,13 +272,15 @@ augroup filetype_html
 	autocmd FileType html nnoremap <buffer> <leader>li a<li></li><esc>4hi
 	autocmd FileType html nnoremap <buffer> <leader>a a<a></a><esc>3hi
 
-	autocmd FileType text setlocal spell! spelllang=en_gb
+	autocmd FileType html nnoremap <buffer> <leader>pr a<pre><cr><code><cr><cr><cr><cr></code><cr></pre><esc>3ki
+
+	autocmd FileType html setlocal spell! spelllang=en_gb
 augroup END
 
 function! FindPlaceholder()
 
    /<++>
-	normal f+hda<
+	normal 0f+hda<
 
 endfunction
 
@@ -292,7 +294,7 @@ augroup filetype_tex
 	autocmd FileType tex :iabbrev sec <BSlash>section{}<left>
 	autocmd FileType tex :iabbrev ssec <BSlash>subsection{}<left>
 
-	autocmd FileType text setlocal spell! spelllang=en_gb
+	autocmd FileType tex setlocal spell spelllang=en_gb
 augroup END
 
 " }}}
@@ -302,7 +304,7 @@ augroup END
 
 augroup filetype_text
 	autocmd!
-	autocmd FileType text setlocal spell! spelllang=en_gb
+	autocmd FileType text setlocal spell spelllang=en_gb
 	autocmd FileType text nnoremap <buffer> <leader>z z=
 augroup END
 
