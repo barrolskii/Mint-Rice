@@ -274,7 +274,7 @@ augroup filetype_html
 
 	autocmd FileType html nnoremap <buffer> <leader>pr a<pre><cr><code><cr><cr><cr><cr></code><cr></pre><esc>3ki
 
-	autocmd FileType html setlocal spell! spelllang=en_gb
+	autocmd FileType html setlocal spell spelllang=en_gb
 augroup END
 
 function! FindPlaceholder()
