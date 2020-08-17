@@ -18,8 +18,9 @@ alias sbr="source ~/.bashrc"
 
 alias cls="clear"
 
-# Refresh doom emacs
+# Doom emacs stuff
 alias dmr="~/.emacs.d/bin/doom refresh"
+alias dms="~/.emacs.d/bin/doom sync"
 
 # Quick quit the terminal because I'm too lazy to type the entire thing
 alias q="exit"
@@ -27,6 +28,9 @@ alias q="exit"
 PATH=$HOME/Dev/Scripts:$PATH
 export TEMPLATES="$HOME/Dev/Templates"
 export PATH="$HOME/neovim/bin:$PATH"
+
+# Set bash to edit in vi mode
+set -o vi
 
 cmkdir()
 {
